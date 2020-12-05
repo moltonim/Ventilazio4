@@ -1,0 +1,63 @@
+
+
+Comandi per seriale. C&P
+
+    ID flash = 0x2D0A.2119.0236.2000
+
+ Read block prot registry:
+ 00, 00, 09
+ risposta: 80, 00, 09, 06, FF, FF, FF, FF, 55, 55, 2E, D5
+ 00, 00, 0A
+ 
+ CRC di 256 byte da indirizzo 0:
+ 00, 00, 06, 00, 00, 00, 00, 01, 00
+ risposta (CRC corretto da 0, 1, 2, ..., FF):
+ 80, 00, 06, 02, *6C, DE*, 13, CB
+ 
+ Unlock ALL protection register
+ 00, 00, 09
+ 
+ Sector (4k) erase (da 0)
+ 00, 00, 7, 00, 00, 00
+ 
+ Check erased area, starting from 0x10000 for 65535 byte
+ 00, 00, 0F, 01, 00, 00, 00, FF, FF
+ answer (ok)
+ 80, 00, 0F, 03, *FF, FF, FF*, FF, 0D
+ 
+ 
+ Write enable:
+ 00, 00, 0C
+ 
+ Write disable
+ 00, 00, 0D
+ 
+ Read status register
+ 00, 00, 0b
+ risposta
+ 80, 00, 0B, *02*, AF, 15
+ 
+ Legge da 0 per 20 (14H)  byte
+ 00, 00, 04, 00, 00, 00, 14
+ risposta:
+ 80, 00, 04, _14_, *20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 2A, 2B, 2C, 2D, 2E, 2F, FF, FF, FF, FF*, D3, FE
+ 
+ ****************************************************************************
+ Ventilo: 00, 01, 19, 00, 02, 00, 00, 00, 00, 00, 04, 00, 00, 00, 00
+ 19 comando, 2 = colli bianchi, 4 = colli gialli 
+ ****************************************************************************
+ 
+  JEDEC
+ 00, 00, 08
+ risposta
+ 80, 00, 08, 03, *BF, 26, 41*, 90, F9
+ 
+ ------------------------------
+ 
+ Scrittura in nero su sfondo bianco di ABCD @ 0, 0
+ 0, 0, 24, 0, 0, 0, 0, 0, 0, FF, FF, 41, 42, 43, 44, 00
+ 
+ Scrittura in bianco su sfondo nero di ABCD @0, 0
+ 0, 0, 24, 0, 0, 0, 0, FF, FF, 0, 0, 41, 42, 43, 44, 00
+ 
+ 
